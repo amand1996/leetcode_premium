@@ -1,0 +1,87 @@
+<%- include('header'); -%>
+<script src="/data/leetcode_questions.js"></script>
+<script src="/data/leetcode_favourites.js"></script>
+<script src="/data/leetcode_tags.js"></script>
+
+<body>
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
+    <div class="container">
+      <a class="navbar-brand" href="#">Leetcode</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+        aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="/">Home
+              <span class="sr-only">(current)</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Page Content -->
+  <div class="container mx-auto p-2">
+    <div class="row">
+      <div class="col-lg-12 text-center">
+        <table class="table table-striped table-bordered" id="leetcode_table">
+          <thead class="thead-dark"></thead>
+        </table>
+      </div>
+    </div>
+  </div>
+</body>
+<script type="text/javascript">
+
+  $(document).ready(function () {
+    $('#leetcode_table').DataTable({
+      "data": questions,
+      "columns": [
+        {
+          "data": "stat.question_id",
+          "title": "#"
+        },
+        {
+          "data": "stat.question__title",
+          "title": "Title",
+          "render": function (data, type, row, meta) {
+            if (type == 'display')
+              return '<a target="_blank" href="https://leetcode.com/problems/' + row.stat.question__title_slug + '">' + data + '</a>';
+            else
+              return data;
+          }
+        },
+        {
+          "data": "difficulty.level",
+          "title": "Difficulty",
+          "render":
+            function (data, type, row, meta) {
+              if (type == 'display')
+                return '<div class="progress"><div class="progress-bar progress-bar-striped" role="progressbar" style="width: ' + data * 100 / 3 + '%"' +
+                  ' aria-valuenow="' + data + '" aria-valuemin="1" aria-valuemax="3"></div></div>';
+              else
+                return data;
+            }
+        },
+        {
+          "data": "frequency",
+          "title": "Frequency",
+          "render":
+            function (data, type, row, meta) {
+              if (type == 'display')
+                return '<div class="progress"><div class="progress-bar bg-success" role="progressbar" style="width: ' + data * 20 + '%"' +
+                  ' aria-valuenow="' + data + '" aria-valuemin="0" aria-valuemax="5"></div></div>';
+              else
+                return data;
+            }
+        }
+      ],
+      "order": [[0, "asc"]]
+    });
+  });
+</script>
+<%- include('footer'); -%>
