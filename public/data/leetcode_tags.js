@@ -11141,3 +11141,5 @@ var tags = {
         }
     ]
 };
+
+module.exports.tags = tags;
