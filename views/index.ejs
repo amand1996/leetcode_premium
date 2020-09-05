@@ -143,11 +143,15 @@
           "width": "10%",
           "render":
             function (data, type, row, meta) {
-              if (type == 'display')
-                return '<div class="progress"><div class="progress-bar progress-bar-striped" role="progressbar" style="width: ' + data * 100 / 3 + '%"' +
-                  ' aria-valuenow="' + data + '" aria-valuemin="1" aria-valuemax="3"></div></div>';
-              else
+              if (type == 'display') {
+                switch (data) {
+                  case 1: return '<div style="color: green">Easy</div>';
+                  case 2: return '<div style="color: orange">Medium</div>';
+                  case 3: return '<div style="color: red">Hard</div>';
+                };
+              } else {
                 return data;
+              }
             }
         },
         {
