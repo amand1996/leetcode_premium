@@ -12,7 +12,7 @@
         aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div class="collapse navbar-collapse" id="navbarResponsive">
+      <!-- <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item active">
             <a class="nav-link" href="/">Home
@@ -20,7 +20,7 @@
             </a>
           </li>
         </ul>
-      </div>
+      </div> -->
     </div>
   </nav>
 
@@ -60,7 +60,8 @@
     </div>
   </div>
   <footer class="page-footer font-small blue">
-    <div class="footer-copyright text-center py-3">Developed by <a target="_blank" href="https://www.linkedin.com/in/aman-dwivedi-7a8625b0/">Aman Dwivedi</a></div>
+    <div class="footer-copyright text-center py-3">Developed by <a target="_blank"
+        href="https://www.linkedin.com/in/aman-dwivedi-7a8625b0/">Aman Dwivedi</a></div>
   </footer>
 </body>
 <script type="text/javascript">
@@ -122,11 +123,13 @@
       "columns": [
         {
           "data": "stat.question_id",
-          "title": "#"
+          "title": "#",
+          "width": "5%"
         },
         {
           "data": "stat.question__title",
           "title": "Title",
+          "width": "20%",
           "render": function (data, type, row, meta) {
             if (type == 'display')
               return '<a target="_blank" href="https://leetcode.com/problems/' + row.stat.question__title_slug + '">' + data + '</a>';
@@ -137,6 +140,7 @@
         {
           "data": "difficulty.level",
           "title": "Difficulty",
+          "width": "10%",
           "render":
             function (data, type, row, meta) {
               if (type == 'display')
@@ -149,6 +153,7 @@
         {
           "data": "frequency",
           "title": "Frequency",
+          "width": "10%",
           "render":
             function (data, type, row, meta) {
               if (type == 'display')
@@ -157,10 +162,33 @@
               else
                 return data;
             }
+        },
+        {
+          "data": "stat.question_id",
+          "title": "Companies",
+          "orderable": false,
+          "width": "65%",
+          "render":
+            function (data, type, row, meta) {
+              if (type == 'display')
+                return getCompanies(data).join(", ");
+              else
+                return data;
+            }
         }
       ],
       "order": [[0, "asc"]]
     });
   });
+
+  function getCompanies(question_no) {
+    var companies = [];
+    tags.companies.forEach(company => {
+      if (company.questions.indexOf(question_no) >= 0) {
+        companies.push(company.name);
+      }
+    });
+    return companies;
+  }
 </script>
 <%- include('footer'); -%>
